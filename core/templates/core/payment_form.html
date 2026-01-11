@@ -1,0 +1,92 @@
+{% extends "core/home.html" %}
+{% block content %}
+
+<style>
+.checkout-card {
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.payment-option {
+  border: 2px solid #eee;
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.payment-option:hover {
+  border-color: #0d6efd;
+  background: #f8f9ff;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pay-btn {
+  border-radius: 30px;
+  padding: 14px;
+  font-size: 17px;
+  font-weight: 600;
+}
+</style>
+
+<div class="container mt-5">
+  <div class="checkout-card">
+
+    <h3 class="mb-4">💳 Checkout</h3>
+
+    <!-- Order Summary -->
+    <h5 class="mb-3">Order Summary</h5>
+
+    {% for item in cart_items %}
+      <div class="summary-row">
+        <span>{{ item.product.name }} × {{ item.quantity }}</span>
+        <strong>Rs {{ item.total }}</strong>
+      </div>
+    {% endfor %}
+
+    <hr>
+
+    <div class="summary-row fs-5">
+      <strong>Total</strong>
+      <strong>Rs {{ total_price }}</strong>
+    </div>
+
+    <!-- Payment -->
+    <form method="post" class="mt-4">
+      {% csrf_token %}
+
+      <h5 class="mb-3">Payment Method</h5>
+
+      <div class="payment-option mb-3">
+        <input type="radio" name="payment_method" value="Cash on Delivery" required>
+        <strong class="ms-2">Cash on Delivery</strong>
+      </div>
+
+      <div class="payment-option mb-3">
+        <input type="radio" name="payment_method" value="Card">
+        <strong class="ms-2">Debit / Credit Card</strong>
+      </div>
+
+      <div class="payment-option mb-3">
+        <input type="radio" name="payment_method" value="JazzCash">
+        <strong class="ms-2">JazzCash / EasyPaisa</strong>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mt-4 pay-btn">
+        Confirm & Pay →
+      </button>
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}

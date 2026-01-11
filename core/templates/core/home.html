@@ -1,0 +1,790 @@
+{% load static %}
+<script>
+  window.onload = function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <!-- {% load static %} -->
+<head>
+  <meta charset="UTF-8" />
+  <title>Home - Food Ordering</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+  background-color:#d7e3f5; /* simple clean background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+    .btn-outline-primary {
+      color: #0d6efd;
+      border: 1px solid #0d6efd;
+      background-color: transparent;
+      transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus {
+      background-color: #0d6efd;
+      color: white;
+      box-shadow: 0 0 6px rgba(13, 110, 253, 0.4);
+      border-color: #0d6efd;
+    }
+
+    .btn-outline-primary.active,
+    .btn-outline-primary:focus,
+    .btn-outline-primary:hover {
+      background-color: #0d6efd;
+      color: white;
+      border-color: #0d6efd;
+      box-shadow: 0 0 8px rgba(13, 110, 253, 0.5);
+    }
+
+    .input-group .form-control:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+    }
+
+    .btn-outline-primary {
+      color: white;
+      border-color: white;
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus,
+    .btn-outline-primary.active {
+      background-color: white;
+      color: #0d6efd;
+      border-color: white;
+    }
+.search-btn {
+  color: black;
+  border-color: black;
+}
+
+.search-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+
+/* Mobile friendly */
+@media (max-width: 576px) {
+  .card-img-top {
+    height: 140px;
+  }
+}
+.input-group {
+    border-radius: 12px;
+  }
+
+  .input-group-text,
+  .input-group .btn {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .input-group .form-control {
+    font-size: 0.9rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  .input-group i {
+    font-size: 0.95rem;
+  }
+
+.rating i {
+  color: #f5b301;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.rating i:hover {
+  transform: scale(1.2);
+}
+.cart-icon{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+.navbar-logo{
+  width:32px;
+  height:32px;
+  object-fit:contain;
+}
+.navbar-brand:hover .navbar-logo{
+  transform: scale(1.05);
+}
+.top-banner {
+  height: 260px;
+  background: url("{% static 'images/background.jpg' %}") center center / cover no-repeat;
+  position: relative;
+}
+
+.banner-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+}
+
+.top-banner h1 {
+  font-size: 2.2rem;
+}
+
+.top-banner p {
+  font-size: 1.1rem;
+}
+
+/* 🖤 Categories Button Custom Style */
+.category-btn {
+  color: #000 !important;
+  border: 1.5px solid #000 !important;
+  background-color: transparent;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background-color: #000 !important;
+  color: #fff !important;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== Ultra Compact Premium Product Card ===== */
+
+.card {
+  border-radius: 14px !important;
+  overflow: hidden;
+  border: none;
+  width: 80%;
+  margin: auto;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+  width: 100%; /* 80% ko 100% kar dein */
+  max-width: 280px; /* Card ko zyada lamba hone se rokne ke liye ye add karein */
+  margin: auto;
+
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.13);
+}
+
+/* Image Area */
+.food-image-wrapper {
+  width: 100%;
+  height: 265px;
+  overflow: hidden;
+  background: #ffffff; /* Background white rakhein taake edges saaf dikhein */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px 14px 0 0; 
+}
+/* .food-image-wrapper , */
+.food-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  transition: transform 0.3s ease;
+  border-radius: 14px 14px 0 0;
+}
+.card:hover .food-image-wrapper img {
+  transform: scale(1.03);
+}
+
+/* Card content more compact */
+.card-body {
+  padding: 10px 12px;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 0.8rem;
+}
+
+.navbar-logo {
+  width: 50px; /* Size barha diya gaya hai */
+  height: 50px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+  border: none;
+}
+.navbar-brand:hover .navbar-logo {
+  transform: rotate(-12deg) scale(1.1); /* Halka sa tilt aur zoom */
+}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-4 shadow-sm sticky-top">
+  
+
+<a class="navbar-brand d-flex align-items-center fw-bold fs-3 text-primary" href="{% url 'home' %}">
+  <img src="{% static 'images/FoodieHub.png' %}" alt="Logo" class="me-2 navbar-logo">
+  Foodie<span class="text-dark"></span>Hub<span class="text-dark"</span>
+</a>
+
+  <div class="collapse navbar-collapse"></div>
+
+ 
+
+  
+  <div class="ms-auto d-flex align-items-center gap-3 flex-wrap">
+    <!-- Cart Basket -->
+<a href="{% url 'cart' %}" class="position-relative me-3 text-decoration-none">
+
+  <img src="{% static 'images/shopping_cart.png' %}"
+       alt="Cart"
+       class="cart-icon">
+
+  <span id="cart-count"
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        {% if cart_count == 0 %}style="display:none"{% endif %}>
+    {{ cart_count }}
+  </span>
+
+</a>
+
+    {% if user.is_authenticated %}
+      <span class="me-3 fw-semibold">Hello, {{ user.first_name }}</span>
+      <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-primary btn-sm">Register</a>
+    {% endif %}
+
+    <!-- Contact Us button -->
+    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+      Contact Us
+    </button>
+
+    <!-- Sort Dropdown -->
+    <form method="get" class="d-flex align-items-center">
+      <select name="sort" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">Sort By</option>
+        <option value="price_asc" {% if request.GET.sort == 'price_asc' %}selected{% endif %}>Price: Low to High</option>
+        <option value="price_desc" {% if request.GET.sort == 'price_desc' %}selected{% endif %}>Price: High to Low</option>
+        <option value="name_asc" {% if request.GET.sort == 'name_asc' %}selected{% endif %}>Name: A to Z</option>
+        <option value="name_desc" {% if request.GET.sort == 'name_desc' %}selected{% endif %}>Name: Z to A</option>
+      </select>
+    </form>
+
+  </div>
+</nav>
+<!-- TOP BANNER -->
+<div class="top-banner d-flex align-items-center justify-content-center text-center mb-4">
+  <div class="banner-overlay">
+    <h1 class="fw-bold">Welcome to FoodOrder 🍕</h1>
+    <p class="mb-1">Your smart & simple online food ordering system</p>
+    <p class="small">Browse • Order • Enjoy — all in one place</p>
+  </div>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+  <div class="mb-3 container">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show d-flex justify-content-between align-items-center" role="alert">
+        <div>{{ message }}</div>
+        <a href="{% url 'customer_dashboard' %}" class="btn btn-sm btn-primary ms-3">Go to Dashboard</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<div class="container my-5">
+  {% block content %}
+<div class="row mb-4">
+  <div class="col-12 col-md-8 mx-auto">
+
+    <!-- 🔍 SEARCH FORM -->
+    <form method="get" class="w-100">
+      {% if selected_category %}
+        <input type="hidden" name="category" value="{{ selected_category }}">
+      {% endif %}
+
+      <div class="input-group shadow-sm">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search text-muted"></i>
+        </span>
+
+        <input
+          type="text"
+          name="search"
+          class="form-control border-start-0 border-end-0"
+          placeholder="Search food..."
+          value="{{ search_query|default_if_none:'' }}"
+        >
+
+        <button type="button"
+                class="btn btn-light border-start-0"
+                onclick="clearSearch()"
+                 title="Clear search">
+                  <i class="bi bi-x-lg"></i>
+                 <button type="submit" class="btn btn-outline-primary search-btn">
+  Search
+</button>
+
+         
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+
+  <!-- Categories -->
+<div class="row mb-4 justify-content-center">
+  <div class="col-12 d-flex justify-content-center" style="overflow-x:auto;">
+    
+    <div class="d-flex flex-row flex-nowrap gap-2 justify-content-center"
+         style="min-width:max-content;">
+
+      <a href="{% url 'home' %}" 
+         class="btn category-btn {% if not selected_category %}active{% endif %}">
+        All
+      </a>     
+
+      {% for category in categories %}
+        <a href="?category={{ category }}{% if search_query %}&search={{ search_query }}{% endif %}" 
+           class="btn category-btn {% if category == selected_category %}active{% endif %}">
+          {{ category|title }}
+        </a>
+      {% endfor %}
+
+    </div>
+
+  </div>
+</div>
+
+
+  <!-- Products -->
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+
+  {% for item in products %}
+    <div class="col">
+      <div class="card shadow-sm h-100">
+
+    <div class="food-image-wrapper">
+  {% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+  {% else %}
+    <img src="https://via.placeholder.com/600x400?text=No+Image" alt="No image">
+  {% endif %}
+</div>
+
+
+<div class="card-body d-flex flex-column">
+  <h5 class="card-title mb-1">{{ item.name }}</h5>
+
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    
+    <p class="card-text text-muted mb-0 small text-start flex-grow-1">
+      {{ item.description|truncatewords:5 }}
+    </p>
+
+    <div class="rating ms-2 text-nowrap" data-product="{{ item.id }}">
+      {% for i in "12345" %}
+        <i class="bi bi-star{% if item.average_rating >= i|add:'0' %}-fill{% endif %}" 
+           data-value="{{ i }}" style="font-size: 0.8rem;"></i>
+      {% endfor %}
+      <span class="text-muted small">({{ item.average_rating }})</span>
+    </div>
+
+  </div>
+  </div>
+<!-- 
+
+          <p class="card-text text-muted mb-2">
+            {{ item.category.name|title }}
+          </p> -->
+
+          <!-- <p class="card-text flex-grow-1">
+            {{ item.description|truncatewords:20 }}
+          </p> -->
+
+          <!-- ✅ STOCK DISPLAY
+          {% if item.stock > 0 %}
+            <p class="text-success fw-bold mb-1">
+              Stock left: {{ item.stock }}
+            </p>
+          {% else %}
+            <p class="text-danger fw-bold mb-1">
+              Out of Stock
+            </p>
+          {% endif %}
+        </div> -->
+
+        <div class="card-footer d-flex justify-content-between align-items-center">
+          <span class="fw-bold text-primary fs-5">
+            Rs. {{ item.price }}
+          </span>
+
+          <!-- {% if item.stock > 0 %}
+            <span class="badge bg-success">Available</span>
+          {% else %}
+            <span class="badge bg-danger">Unavailable</span>
+          {% endif %} -->
+
+          <!-- ✅ ADD TO CART BUTTON -->
+          {% if item.stock > 0 %}
+            {% if user.is_authenticated %}
+              <form method="post"
+                    action="{% url 'add_to_cart' item.id %}"
+                    class="add-to-cart-form">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Add to Cart
+                </button>
+              </form>
+            {% else %}
+              <a href="{% url 'login' %}?next={{ request.path }}"
+                 class="btn btn-secondary btn-sm">
+                Login to Add
+              </a>
+            {% endif %}
+          {% else %}
+            <button class="btn btn-secondary btn-sm" disabled>
+              Unavailable
+            </button>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+
+  {% empty %}
+    <p class="text-center fs-5 mt-4 text-white">
+      <b>No food items found.</b>
+    </p>
+  {% endfor %}
+
+</div>
+
+
+  {% endblock %}
+</div>
+
+<!-- Footer Section -->
+<footer class="bg-light text-dark py-5 mt-5 shadow-sm">
+  <div class="container">
+    <div class="row mb-4">
+      <!-- Top Categories -->
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">Top Categories</h5>
+        <ul class="list-unstyled">
+          {% for category in categories|slice:":20" %}
+            <li><a href="?category={{ category }}" class="text-dark text-decoration-none">{{ category|title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Customer Services -->
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">Customer Services</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#helpCenterModal">Help Center</a></li>
+          <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#howToBuyModal">How to Buy</a></li>
+          <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#returnsRefundsModal">Returns & Refunds</a></li>
+          <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- About Us -->
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">About Us</h5>
+        <ul class="list-unstyled">
+  <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#aboutUsModal">About FoodOrder</a></li>
+  <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#termsModal">Terms & Conditions</a></li>
+  <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></li>
+  <li><a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#careersModal">Careers</a></li>
+</ul>
+
+      </div>
+      <!-- About Us Modal -->
+<div class="modal fade" id="aboutUsModal" tabindex="-1" aria-labelledby="aboutUsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="aboutUsLabel">About FoodieHub</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>FoodieHub is a convenient platform that connects you to your favorite meals with just a few clicks. We aim to make food ordering fast, easy, and enjoyable.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Terms & Conditions Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsLabel">Terms & Conditions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>By using FoodOrder, you agree to our terms: Orders are subject to availability, delivery times may vary, and payment must be made at the time of order. Misuse of the platform may result in account suspension.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="privacyLabel">Privacy Policy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>We respect your privacy. Your data will only be used to enhance your experience on FoodOrder. We do not sell your personal information to third parties.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Careers Modal -->
+<div class="modal fade" id="careersModal" tabindex="-1" aria-labelledby="careersLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="careersLabel">Careers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Join our growing team! We're always looking for passionate individuals in tech, customer service, and logistics. Send your resume to careers@foodorder.com.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-3">
+  <h5 class="fw-bold mb-3">Subscribe to Newsletter</h5>
+  <form class="d-flex" method="post" action="{% url 'subscribe_newsletter' %}">
+    {% csrf_token %}
+    <input type="email" name="email" class="form-control me-2" placeholder="Your email" required>
+    <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+  </form>
+</div>
+
+<div class="col-md-3">
+  <h5 class="fw-bold mb-3">Quick Links</h5>
+  <ul class="list-unstyled">
+    <li><a href="{% url 'faq' %}" class="text-dark text-decoration-none">FAQ</a></li>
+    <li><a href="{% url 'blog' %}" class="text-dark text-decoration-none">Blog</a></li>
+  </ul>
+</div>
+
+
+      <div class="col-md-3">
+        <h5 class="fw-bold mb-3">Follow Us</h5>
+         <!-- Social Media Icons -->
+        <div class="d-flex justify-content-center gap-3 mt-3">
+          <a href="https://facebook.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="40" height="40">
+          </a>
+          <a href="https://twitter.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="40" height="40">
+          </a>
+          <a href="https://instagram.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="40" height="40">
+          </a>
+          <a href="https://linkedin.com" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="40" height="40">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="text-center text-muted">
+      &copy; {{ year }} FoodOrder. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+
+<!-- Contact Us Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel">Contact Us</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>123 Main St, City, Country</p>
+        <p>+1 234 567 8900</p>
+        <p>info@example.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Help Center Modal -->
+<div class="modal fade" id="helpCenterModal" tabindex="-1" aria-labelledby="helpCenterLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="helpCenterLabel">Help Center</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Welcome to the Help Center!<br>Find FAQs, troubleshooting tips, and assistance here.</p>
+        <ul>
+          <li>How to place an order?</li>
+          <li>Payment methods accepted</li>
+          <li>Delivery information and tracking</li>
+          <li>Account management</li>
+          <li>Contact support for further help</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- How to Buy Modal -->
+<div class="modal fade" id="howToBuyModal" tabindex="-1" aria-labelledby="howToBuyLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="howToBuyLabel">How to Buy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li>Create an account or login.</li>
+          <li>Browse categories or search for your favorite foods.</li>
+          <li>Add items to your cart.</li>
+          <li>Review your cart and place your order.</li>
+          <li>Choose a payment method and confirm the order.</li>
+          <li>Track your delivery and enjoy your meal!</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Returns & Refunds Modal -->
+<div class="modal fade" id="returnsRefundsModal" tabindex="-1" aria-labelledby="returnsRefundsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="returnsRefundsLabel">Returns & Refunds</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+  <p>
+  At <b>FoodieHub</b>, all meals are freshly prepared for you.  
+  Because food is perishable, we do <b>not accept returns or provide refunds</b> after delivery.
+  </p>
+
+  <p>
+  Your satisfaction matters to us 💛  
+  If your order arrives damaged, incorrect, or incomplete, please contact our support team immediately.
+  </p>
+
+  <ul>
+    <li>Food items cannot be returned once delivered.</li>
+    <li>Refunds are not applicable on food orders.</li>
+    <li>For any genuine issue, our team will assist you with the best possible solution.</li>
+  </ul>
+
+  <p>
+  Need help? Feel free to reach out through our <b>Contact Us</b> section 😊
+  </p>
+</div>
+
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('.add-to-cart-form').on('submit', function (e) {
+      e.preventDefault(); // form submit rok do
+      
+      const form = $(this);
+      const url = form.attr('action');
+      const data = form.serialize();
+
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        success: function (response) {
+         
+        },
+        error: function () {
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    });
+  });
+</script>
+<script>
+  function clearSearch() {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('search');
+    window.location.href = url.toString();
+  }
+</script>
+
+
+<script>
+$('.rating i').on('click', function () {
+  const star = $(this);
+  const rating = star.data('value');
+  const productId = star.closest('.rating').data('product');
+
+  $.post(`/rate-product/${productId}/`, {
+    rating: rating,
+    csrfmiddlewaretoken: '{{ csrf_token }}'
+  }, function (response) {
+    if (response.success) {
+      star.parent().find('span').text(`(${response.avg_rating})`);
+    }
+  });
+});
+</script>
+
+<script>
+$(document).ready(function () {
+  $('.add-to-cart-form').on('submit', function (e) {
+    e.preventDefault();
+
+    const form = $(this);
+
+    $.ajax({
+      type: 'POST',
+      url: form.attr('action'),
+      data: form.serialize(),
+      success: function (response) {
+        if (response.success) {
+          $('#cart-count').text(response.cart_count).show();
+        }
+      }
+    });
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

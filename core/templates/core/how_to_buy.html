@@ -1,0 +1,15 @@
+{% extends "core/home.html" %}
+{% block content %}
+<div class="container my-5">
+  <h2>How to Buy</h2>
+  <ol>
+    <li><strong>If you are a new user:</strong> Please <a href="{% url 'register' %}">Register</a> for an account.</li>
+    <li><strong>If you are an existing user:</strong> <a href="{% url 'login' %}">Login</a> to your account.</li>
+    <li>Browse the food items and select the products you want to order.</li>
+    <li>Add the items to your cart and proceed to checkout.</li>
+    <li>Choose your payment method and complete the payment process.</li>
+    <li>Once payment is confirmed, your order will be processed and delivered.</li>
+  </ol>
+  <p>If you face any issues, feel free to <a href="{% url 'contact_us' %}">Contact Us</a>.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "core/home.html" %}
+{% load markdown_extras %}  {# Load once at the top #}
+
+{% block title %}Our Blog{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-white mb-4">Latest Blog Posts</h2>
+
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="Blog image">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+
+                    <!-- Preview content (truncate and markdown-rendered) -->
+                    <div class="card-text preview-content" id="preview-{{ post.id }}">
+                        {{ post.content|truncatewords_html:30|markdownify }}
+                    </div>
+
+                    <!-- Full content hidden initially (full markdown-rendered) -->
+                    <div class="card-text full-content d-none" id="full-{{ post.id }}">
+                        {{ post.content|markdownify }}
+                    </div>
+
+                    <button class="btn btn-primary btn-sm toggle-btn" data-postid="{{ post.id }}">View Blog</button>
+
+                    <p class="text-muted"><small>Posted on {{ post.created_at|date:"F j, Y" }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No blog posts available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.toggle-btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const postId = this.getAttribute('data-postid');
+            const preview = document.getElementById(`preview-${postId}`);
+            const full = document.getElementById(`full-${postId}`);
+            if (full.classList.contains('d-none')) {
+                // Show full content, hide preview
+                full.classList.remove('d-none');
+                preview.classList.add('d-none');
+                this.textContent = 'Hide';
+            } else {
+                // Show preview, hide full content
+                full.classList.add('d-none');
+                preview.classList.remove('d-none');
+                this.textContent = 'View Blog';
+            }
+        });
+    });
+});
+</script>
+
+<style>
+.d-none {
+    display: none;
+}
+</style>
+{% endblock %}

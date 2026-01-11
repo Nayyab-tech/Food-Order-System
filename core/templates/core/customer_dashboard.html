@@ -1,0 +1,350 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #0c3c60;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Blurred background layer */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url("{% static 'images/customer.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
+  }
+
+  nav.navbar {
+    background: linear-gradient(90deg, #4dabf7 0%, #228be6 100%);
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.25);
+    position: relative;
+    z-index: 1;
+  }
+
+  nav.navbar a.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #e3f2fd;
+  }
+
+  nav.navbar .btn-outline-light {
+    border-radius: 50px;
+    padding: 5px 18px;
+    font-weight: 600;
+    color: #e3f2fd;
+    border-color: #e3f2fd;
+  }
+
+  nav.navbar .btn-outline-light:hover {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    box-shadow: 0 0 8px #e3f2fd;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    color: #228be6;
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary {
+    background: #4dabf7;
+    border: none;
+    font-weight: 600;
+    padding: 8px 26px;
+    border-radius: 50px;
+    transition: background 0.3s ease;
+    box-shadow: 0 4px 12px rgba(77, 171, 247, 0.3);
+    display: block;
+    margin: 0 auto 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-primary:hover {
+    background: #228be6;
+    box-shadow: 0 6px 18px rgba(34, 139, 230, 0.5);
+  }
+
+  .card {
+    background: #e3f2fdcc; /* semi-transparent so background blur effect can be seen faintly */
+    border-radius: 18px;
+    box-shadow: 0 10px 24px rgba(77, 171, 247, 0.12);
+    margin-bottom: 40px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card-header {
+    background: linear-gradient(90deg, #4dabf7 0%, #228be6 100%);
+    color: #ffffff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .table thead {
+    background: linear-gradient(90deg, #4dabf7 0%, #228be6 100%);
+    color: white;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  .table tbody tr:hover {
+    background-color: #d0ebff !important;
+    transform: scale(1.005);
+    box-shadow: 0 8px 18px rgba(34, 139, 230, 0.15);
+  }
+
+  input[type=number] {
+    width: 60px;
+    border-radius: 50px;
+    border: 1.5px solid #4dabf7;
+    padding: 5px 12px;
+    font-size: 0.9rem;
+    color: #0c3c60;
+    font-weight: 600;
+  }
+
+  input[type=number]:focus {
+    box-shadow: 0 0 8px rgba(34, 139, 230, 0.4);
+    border-color: #228be6;
+  }
+
+  .cart-total {
+    text-align: right;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #228be6;
+    margin-top: 25px;
+    margin-right: 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .payment-form {
+    max-width: 400px;
+    margin: 0 auto 60px;
+    padding: 18px 26px;
+    background: #e3f2fdcc;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(77, 171, 247, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .payment-form label {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #228be6;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  select.form-select {
+    border-radius: 50px;
+    border: 1.5px solid #4dabf7;
+    padding: 7px 14px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #0c3c60;
+    margin-bottom: 20px;
+  }
+
+  .btn-go-cart {
+    width: 100%;
+    background: #4dabf7;
+    border: none;
+    padding: 12px 0;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(77, 171, 247, 0.3);
+  }
+
+  .btn-go-cart:hover {
+    background: #228be6;
+    box-shadow: 0 10px 30px rgba(34, 139, 230, 0.5);
+  }
+
+  .badge.bg-success {
+    background-color: #51cf66 !important;
+  }
+
+  .badge.bg-danger {
+    background-color: #fa5252 !important;
+  }
+
+  .badge.bg-warning {
+    background-color: #ffd43b !important;
+  }
+
+  .btn-small {
+    padding: 6px 8px !important;
+    font-size: 0.8rem !important;
+    line-height: 2 !important;
+  }
+  </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg px-5">
+  <a class="navbar-brand" href="#">Customer Dashboard</a>
+  <div class="ms-auto">
+    <a href="{% url 'logout' %}" class="btn btn-outline-light btn-sm">Logout</a>
+  </div>
+</nav>
+
+<div class="container">
+  <h2>Welcome, {{ user.first_name }}</h2>
+
+<a href="{% url 'home' %}" class="btn btn-primary mb-5" style="width: 200px; text-align: center; font-size: 0.85rem;">Place Order</a>
+
+  {% if orders %}
+  <div class="card">
+    <div class="card-header">Your Recent Orders</div>
+    <div class="card-body p-0">
+      <table class="table table-borderless align-middle mb-0">
+        <thead class="table-primary text-uppercase">
+          <tr>
+            <th class="ps-4">Order ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr class="bg-white border-bottom shadow-sm">
+            <td class="ps-4 fw-semibold">#{{ order.id }}</td>
+            <td>{{ order.order_date|date:"d M, Y" }}</td>
+            <td>
+              <span class="badge {% if order.status == 'delivered' %}bg-success{% elif order.status == 'cancelled' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+                {{ order.status|title }}
+              </span>
+            </td>
+            <td class="fw-bold">Rs. {{ order.total_amount }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% else %}
+  <p style="text-align:center; font-style: italic; color: #666;">You haven't placed any orders yet.</p>
+  {% endif %}
+
+<h4 style="color: #4dabf7;"><b>Your Cart</b></h4>
+
+  {% if cart_items %}
+  <div class="card">
+    <div class="card-header">Cart Items</div>
+    <div class="card-body p-0">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in cart_items %}
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>
+              <form action="{% url 'update_cart_item' item.product.id %}" method="POST" class="d-flex align-items-center quantity-form">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" required />
+              </form>
+
+<script>
+  document.querySelectorAll('.quantity-form input[type="number"]').forEach(input => {
+    input.addEventListener('change', () => {
+      input.form.submit();
+    });
+  });
+</script>
+
+            </td>
+            <td>Rs. {{ item.total }}</td>
+            <td>
+              <form action="{% url 'remove_cart_item' item.product.id %}" method="POST" class="m-0">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="cart-total">Total Price: Rs. {{ total_price }}</p>
+
+  <form method="POST" action="{% url 'payment' %}" class="payment-form">
+    {% csrf_token %}
+    <label for="payment_method">Select Payment Method</label>
+    <select name="payment_method" id="payment_method" class="form-select" required>
+      <option value="" disabled selected>-- Choose Payment Method --</option>
+      <option value="cash">Cash</option>
+      <option value="credit_card">Credit Card</option>
+      <option value="debit_card">Debit Card</option>
+      <option value="online_wallet">Online Wallet</option>
+    </select>
+    <button type="submit" class="btn-go-cart">Confirm Payment</button>
+
+    {% if error %}
+    <div class="alert alert-danger mt-3">{{ error }}</div>
+    {% endif %}
+  </form>
+  {% else %}
+  <p style="text-align:center; font-style: italic; color: #666;">Your cart is empty.</p>
+  {% endif %}
+</div>
+
+<script>
+  // Save scroll position before page unload
+  window.addEventListener("beforeunload", function () {
+    localStorage.setItem("scrollY", window.scrollY);
+  });
+
+  // Restore scroll position after page load
+  window.addEventListener("load", function () {
+    const scrollY = localStorage.getItem("scrollY");
+    if (scrollY) {
+      window.scrollTo(0, parseInt(scrollY));
+      localStorage.removeItem("scrollY");
+    }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

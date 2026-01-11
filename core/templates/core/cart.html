@@ -1,0 +1,138 @@
+{% extends "core/home.html" %}
+{% block content %}
+
+<script>
+window.onload = function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+</script>
+
+<style>
+.cart-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 25px;
+}
+
+.cart-title { font-weight: 700; }
+
+.cart-table th { background: #f8f9fa; border: none; }
+.cart-table td { vertical-align: middle; border-top: 1px solid #eee; }
+
+.qty-btn { width: 32px; height: 32px; border-radius: 50%; }
+.qty-number { min-width: 28px; display: inline-block; text-align: center; font-weight: 600; }
+
+.remove-btn { border-radius: 50%; width: 34px; height: 34px; }
+
+.summary-box {
+  background: linear-gradient(135deg, #141414, #4f504f);
+  color: white;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.empty-cart-box { animation: fadeInUp 0.8s ease-in-out; }
+.empty-icon { font-size: 80px; animation: bounce 1.5s infinite; }
+
+@keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(30px);} to{opacity:1;transform:translateY(0);} }
+</style>
+
+<div class="container mt-4">
+  <div class="cart-card">
+
+    <h3 class="cart-title mb-4">🛒 Your Shopping Cart</h3>
+
+{% if cart_items %}
+
+<div id="cart-area">
+
+<div class="table-responsive">
+<table class="table cart-table align-middle">
+<thead>
+<tr>
+<th>Item</th><th>Price</th><th class="text-center">Quantity</th><th>Total</th><th class="text-center">Remove</th>
+</tr>
+</thead>
+
+<tbody>
+{% for item in cart_items %}
+<tr data-id="{{ item.product.id }}">
+<td><strong>{{ item.product.name }}</strong></td>
+<td>Rs {{ item.product.price }}</td>
+<td class="text-center">
+<button class="btn btn-outline-secondary btn-sm qty-btn minus">−</button>
+<span class="mx-2 qty-number">{{ item.qty }}</span>
+<button class="btn btn-outline-secondary btn-sm qty-btn plus">+</button>
+</td>
+<td><strong>Rs {{ item.subtotal }}</strong></td>
+<td class="text-center">
+<button class="btn btn-outline-danger btn-sm remove remove-btn">✕</button>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div class="row mt-4">
+<div class="col-md-6"></div>
+<div class="col-md-6">
+<div class="summary-box text-end">
+<h5 class="mb-2">Grand Total</h5>
+<h3 class="fw-bold">Rs {{ total }}</h3>
+</div>
+
+<a href="{% url 'checkout_address' %}" class="btn btn-primary w-100 mt-3">
+Proceed to Checkout →
+</a>
+
+</div>
+</div>
+
+</div>
+
+{% else %}
+
+<div class="text-center py-5 empty-cart-box">
+<div class="empty-icon">🛒</div>
+<h4>Your cart is empty</h4>
+<a href="{% url 'home' %}" class="btn btn-primary mt-3">← Go to Home</a>
+</div>
+
+{% endif %}
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+function smoothReloadCart(){
+  $('#cart-area').fadeTo(150,0.3);
+  $('#cart-area').load(window.location.href + ' #cart-area > *', function(){
+      $('#cart-area').fadeTo(150,1);
+  });
+}
+
+$(document).on('click','.plus, .minus',function(){
+  const row=$(this).closest('tr');
+  const id=row.data('id');
+  const action=$(this).hasClass('plus')?'plus':'minus';
+
+  $.post(`/cart/update/${id}/`,{
+    action:action,
+    csrfmiddlewaretoken:'{{ csrf_token }}'
+  },function(){ smoothReloadCart(); });
+});
+
+$(document).on('click','.remove',function(){
+  const id=$(this).closest('tr').data('id');
+
+  $.post(`/cart/remove/${id}/`,{
+    csrfmiddlewaretoken:'{{ csrf_token }}'
+  },function(){ smoothReloadCart(); });
+});
+</script>
+
+{% endblock %}

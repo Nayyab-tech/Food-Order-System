@@ -1,0 +1,100 @@
+{% extends "core/home.html" %}
+{% block content %}
+
+<style>
+    .payment-card { border: none; background: #ffffff; max-width: 550px; width: 100%; }
+    .payment-option {
+        display: block; cursor: pointer; padding: 15px 20px; border: 2px solid #f0f0f0;
+        border-radius: 12px; margin-bottom: 12px; transition: all 0.3s ease; position: relative;
+    }
+    input[type="radio"]:checked + .payment-option {
+        border-color: #0d6efd; background-color: #f0f7ff;
+    }
+    .payment-option i { font-size: 1.4rem; margin-right: 12px; color: #6c757d; }
+    input[type="radio"]:checked + .payment-option i { color: #0d6efd; }
+    
+    /* Extra Fields Styling */
+    .extra-fields {
+        display: none; /* By default hidden */
+        background: #f8f9fa; padding: 20px; border-radius: 12px; margin-top: -5px; margin-bottom: 15px;
+        border: 1px solid #dee2e6;
+    }
+</style>
+
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+    <div class="card payment-card p-4 shadow-lg rounded-4">
+        
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-dark">💳 Payment Method</h3>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="radio" name="payment_method" value="COD" id="cod" class="d-none" required checked onchange="toggleFields()">
+            <label for="cod" class="payment-option d-flex align-items-center">
+                <i class="bi bi-cash-stack"></i> <span class="fw-bold">Cash on Delivery (COD)</span>
+            </label>
+
+            <input type="radio" name="payment_method" value="Card" id="card" class="d-none" onchange="toggleFields()">
+            <label for="card" class="payment-option d-flex align-items-center">
+                <i class="bi bi-credit-card"></i> <span class="fw-bold">Credit / Debit Card</span>
+            </label>
+            
+            <div id="card-fields" class="extra-fields">
+                <label class="small fw-bold">Card Number</label>
+                <input type="text" class="form-control mb-2" placeholder="1234 5678 9101 1121" maxlength="16">
+                <label class="small fw-bold">Name on Card</label>
+                <input type="text" class="form-control mb-2" placeholder="Full Name">
+                <div class="row">
+                    <div class="col-6">
+                        <label class="small fw-bold">Expiry Date</label>
+                        <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="col-6">
+                        <label class="small fw-bold">CVV</label>
+                        <input type="password" class="form-control" placeholder="123" maxlength="3">
+                    </div>
+                </div>
+            </div>
+
+            <input type="radio" name="payment_method" value="JazzCash" id="jazz" class="d-none" onchange="toggleFields()">
+            <label for="jazz" class="payment-option d-flex align-items-center">
+                <i class="bi bi-wallet2"></i> <span class="fw-bold">JazzCash</span>
+            </label>
+
+            <input type="radio" name="payment_method" value="EasyPaisa" id="easy" class="d-none" onchange="toggleFields()">
+            <label for="easy" class="payment-option d-flex align-items-center">
+                <i class="bi bi-phone-vibrate"></i> <span class="fw-bold">EasyPaisa</span>
+            </label>
+
+            <div id="wallet-fields" class="extra-fields">
+                <label class="small fw-bold">Mobile Account Number</label>
+                <input type="tel" class="form-control" placeholder="03xxxxxxxxx" maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                <small class="text-muted">Enter your 11-digit mobile number.</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-3 mt-3 rounded-pill fw-bold shadow-sm">
+                Confirm & Pay <i class="bi bi-check2-circle ms-2"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function toggleFields() {
+    const cardFields = document.getElementById('card-fields');
+    const walletFields = document.getElementById('wallet-fields');
+    const selectedCard = document.getElementById('card').checked;
+    const selectedJazz = document.getElementById('jazz').checked;
+    const selectedEasy = document.getElementById('easy').checked;
+
+    // Show card fields only if Card is selected
+    cardFields.style.display = selectedCard ? 'block' : 'none';
+
+    // Show wallet fields if JazzCash or EasyPaisa is selected
+    walletFields.style.display = (selectedJazz || selectedEasy) ? 'block' : 'none';
+}
+</script>
+
+{% endblock %}

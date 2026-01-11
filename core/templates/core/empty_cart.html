@@ -1,0 +1,9 @@
+{% extends "core/home.html" %}
+
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="text-danger">Your Cart is Empty</h2>
+    <p>Looks like you haven't added any items to your cart yet.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary mt-3">Browse Food Menu</a>
+</div>
+{% endblock %}

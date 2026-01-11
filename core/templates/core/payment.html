@@ -1,0 +1,26 @@
+{% extends "core/home.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Select Payment Method</h2>
+    
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="payment_method" class="form-label">Payment Method</label>
+            <select class="form-select" id="payment_method" name="payment_method" required>
+                <option value="">-- Choose Payment Method --</option>
+                <option value="cash">Cash</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="online_wallet">Online Wallet</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Pay Rs. {{ cart_items|sum:"product.price*quantity" }}</button>
+    </form>
+</div>
+{% endblock %}

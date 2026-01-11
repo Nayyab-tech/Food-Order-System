@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Confirmed</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+    background: linear-gradient(135deg,#f4faf6,#ffffff);
+    min-height:100vh;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.container{ max-width: 720px; }
+
+.success-card{
+    border-radius: 20px;
+    padding: 1.4rem;
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    animation: fadeUp .5s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform: translateY(20px);}
+    to{opacity:1; transform: translateY(0);}
+}
+
+.success-icon{
+    font-size: 42px;
+    width: 62px;
+    height: 62px;
+    margin: auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#2ecc71,#27ae60);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 8px 18px rgba(46,204,113,.35);
+}
+
+.order-badge{
+    background:#e9f8f0;
+    color:#1b7d45;
+    border-radius:50px;
+    padding:4px 12px;
+    font-weight:600;
+    font-size: 12px;
+}
+
+.section-title{
+    font-weight:600;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.table{ border-radius:10px; overflow:hidden; }
+.table thead{ background:#27ae60; color:white; }
+.table td, .table th{ padding:.45rem; font-size: 13px; }
+
+.address-box{
+    background:#f7faf8;
+    border-left:3px solid #27ae60;
+    border-radius:10px;
+    padding:10px;
+    font-size: 13px;
+}
+
+.btn-success{
+    background: linear-gradient(135deg,#2ecc71,#27ae60);
+    border: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container py-3">
+<div class="success-card">
+
+<div class="text-center mb-2">
+    <div class="success-icon">✓</div>
+    <span class="order-badge mt-2 d-inline-block">ORDER CONFIRMED</span>
+    <h6 class="text-success mt-1 mb-0">Thank You For Your Order</h6>
+    <small class="text-muted">Preparing your food…</small>
+</div>
+
+<div class="row text-center mb-2 small">
+    <div class="col-6">
+        <div class="text-muted">Order ID</div>
+        <div class="fw-semibold">#{{ order.id }}</div>
+    </div>
+    <div class="col-6">
+        <div class="text-muted">Delivery</div>
+        <div class="fw-semibold">{{ delivery_text }}</div>
+    </div>
+</div>
+
+<div class="section-title">🍽️ Items</div>
+
+<div class="table-responsive mt-1">
+<table class="table table-sm text-center align-middle mb-1">
+<thead>
+<tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>
+</thead>
+<tbody>
+{% for item in items %}
+<tr>
+<td>{{ item.food_item.name }}</td>
+<td>{{ item.quantity }}</td>
+<td>Rs {{ item.price }}</td>
+<td>Rs {{ item.subtotal }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+<div class="text-end fw-bold small">Total: Rs {{ order.total_amount }}</div>
+
+<div class="section-title">📍 Address</div>
+
+{% if address %}
+<div class="address-box mt-1">
+    <div class="fw-semibold">{{ address.name }}</div>
+    <div>{{ address.address }}, {{ address.city }}</div>
+    <div class="text-muted">📞 {{ address.phone }}</div>
+</div>
+{% endif %}
+
+<div class="text-center mt-3">
+<a href="{% url 'home' %}" class="btn btn-success btn-sm px-4 py-1 rounded-pill shadow-sm">
+    Continue Shopping
+</a>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

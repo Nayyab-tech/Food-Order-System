@@ -1,0 +1,146 @@
+{% extends "core/home.html" %}
+
+{% block content %}
+<style>
+  /* Page Background */
+  body {
+    background-color: #f0f4f8; 
+  }
+
+  /* Card Width and Alignment */
+  .faq-card {
+    width: 100%;
+    max-width: 1100px; 
+    margin: 20px auto;
+    border-radius: 15px;
+    border: none;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #eee;
+    padding: 25px;
+    transition: background 0.3s;
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
+  }
+
+  .faq-item:hover {
+    background-color: #fcfcfc;
+  }
+
+  .faq-question {
+    color: #000000; /* Black color as requested */
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+  }
+
+  .faq-answer {
+    color: #444;
+    font-size: 1.05rem;
+    margin-top: 10px;
+    line-height: 1.6;
+    padding-left: 5px;
+  }
+
+  h1.faq-title {
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+  }
+
+  .text-primary-link {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: bold;
+  }
+</style>
+
+<div class="container-fluid py-5">
+    <h1 class="text-center faq-title">Frequently Asked Questions (FAQ)</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-11 col-lg-10">
+            <div class="card faq-card shadow-lg p-3 p-md-5 bg-white">
+                
+                <div class="faq-item">
+                    <div class="faq-question">Q1: How do I place an order?</div>
+                    <div class="faq-answer">
+                        A: After login , You can browse our products, add them to your cart, and proceed to checkout to place an order.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q2: What payment methods do you accept?</div>
+                    <div class="faq-answer">
+                        A: We accept credit/debit cards, online wallet cash, and other popular payment methods.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q3: How do I track my order?</div>
+                    <div class="faq-answer">
+                        A: After placing your order, you will receive a tracking number via email that you can use to check the delivery status.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q4: Can I return or exchange a product?</div>
+                    <div class="faq-answer">
+                        A: Yes, please refer to our 
+                        <a href="#" class="text-primary-link" data-bs-toggle="modal" data-bs-target="#refundModal">Returns & Refunds</a> policy for detailed instructions.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q5: How can I contact customer support?</div>
+                    <div class="faq-answer">
+                        A: You can reach us through the 
+                        <a href="#" class="text-primary-link" data-bs-toggle="modal" data-bs-target="#contactModal">Contact Us</a> page or via our customer service hotline.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="refundModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Returns & Refunds Policy</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p>Please review our refund policy below:</p>
+        <ul class="lh-lg">
+          <li>Products can be returned within 7 days of delivery.</li>
+          <li>Items must be unused and in original packaging.</li>
+          <li>Refunds will be processed within 5 business days.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Contact Us</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <p><i class="bi bi-geo-alt-fill me-2"></i> 123 Main St, City, Country</p>
+        <p><i class="bi bi-telephone-fill me-2"></i> <strong>Phone:</strong> +1 234 567 8900</p>
+        <p><i class="bi bi-envelope-fill me-2"></i> <strong>Email:</strong> info@example.com</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

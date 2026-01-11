@@ -1,0 +1,144 @@
+{% extends "core/home.html" %}
+{% block content %}
+
+<style>
+    /* Card design improvements */
+    .checkout-card {
+        border: none;
+        background: #ffffff;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Input field styling */
+    .form-control {
+        border-radius: 8px;
+        padding: 12px 15px;
+        border: 1px solid #e0e0e0;
+        background-color: #f8f9fa;
+    }
+
+    .form-control:focus {
+        background-color: #fff;
+        box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.1);
+        border-color: #28a745;
+    }
+
+    /* Radio button custom style */
+    .address-type-container {
+        display: flex;
+        gap: 20px;
+    }
+
+    .address-type-container label {
+        cursor: pointer;
+        padding: 10px 20px;
+        border: 2px solid #f0f0f0;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    input[type="radio"]:checked + label {
+        border-color: #28a745;
+        background-color: #e8f5e9;
+        color: #28a745;
+        font-weight: bold;
+    }
+
+    .input-group-text {
+        background-color: #f8f9fa;
+        border-right: none;
+        color: #6c757d;
+        border-radius: 8px 0 0 8px;
+    }
+
+    .form-control.with-icon {
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+    }
+</style>
+
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+    <div class="card checkout-card p-4 p-md-5 shadow-lg rounded-4" style="max-width: 600px; width: 100%;">
+        
+        <div class="text-center mb-4">
+            <h3 class="fw-bold text-dark">📍 Delivery Details</h3>
+            <p class="text-muted small">Please provide your accurate address for faster delivery.</p>
+        </div>
+
+        <form method="post" action="{% url 'checkout_address' %}">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Full Name</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input class="form-control with-icon" name="name" placeholder="Enter your full name" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-bold">Phone Number</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+<input 
+    type="tel" 
+    class="form-control with-icon" 
+    name="phone" 
+    placeholder="03xxxxxxxxx" 
+    required
+    pattern="[0-9]{11}" 
+    title="Please enter exactly 11 digits"
+    maxlength="11"
+    minlength="11"
+    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+>                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label small fw-bold">Email Address</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input type="email" class="form-control with-icon" name="email" placeholder="name@email.com" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Full Address</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                    <textarea class="form-control with-icon" name="address" rows="2" placeholder="House #, Street, Area..." required></textarea>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label small fw-bold">City</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-building"></i></span>
+                    <input class="form-control with-icon" name="city" placeholder="Your City" required>
+                </div>
+            </div>
+
+            <label class="form-label small fw-bold mb-2">Save Address As</label>
+            <div class="address-type-container mb-4">
+                <div class="flex-fill">
+                    <input type="radio" name="address_type" value="home" id="home" class="d-none" required checked>
+                    <label for="home"><i class="bi bi-house-door me-2"></i>Home</label>
+                </div>
+                <div class="flex-fill">
+                    <input type="radio" name="address_type" value="office" id="office" class="d-none">
+                    <label for="office"><i class="bi bi-briefcase me-2"></i>Office</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-3 rounded-pill fw-bold shadow-sm">
+                Proceed to Pay <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "core/home.html" %}
+{% load static %}
+
+{% block title %}Create New Blog Post{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="text-white mb-4">Create New Blog Post</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">Publish Blog</button>
+    </form>
+</div>
+{% endblock %}
