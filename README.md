@@ -127,8 +127,6 @@ MongoDB collections for users, categories, food items, cart, and orders.
 **Figure 1:** ERD  
 **Figure 2:** Use Case Diagram  
 
-*(Insert your actual diagrams as images in GitHub repository)*
-
 ---
 
 ## 6. Conclusion
